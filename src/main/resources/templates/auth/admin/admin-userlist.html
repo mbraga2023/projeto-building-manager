@@ -1,0 +1,52 @@
+<th:block th:replace="~{/fragments/head :: head}"></th:block>
+
+<body>
+    <div th:replace="/fragments/top :: navbar"></div>
+
+
+   <section>
+        <div class="container" style="width: 100%; padding-bottom: 30px;">
+            <!-- ... Breadcrumb ... -->
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Unit Number</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-striped">
+                    <tr th:each="user : ${user}">
+                        <td th:text="${user.id}" style="width: 5%;"></td>
+                        <td th:text="${user.email}" style="width: 20%;"></td>
+                        <td th:text="${user.name}" style="width: 15%;"></td>
+                        <td th:text="${user.unitNumber}" style="width: 20%;"></td>
+                        <td>
+                            <span><a class="btn btn-primary" th:href="@{/edituser/{id}(id=${user.id})}" role="button">Edit</a></span>
+                            <span><a class="btn btn-danger" href="#" role="button" th:attr="data-userid=${user.id}">Delete</a></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <script th:inline="javascript">
+                $(document).ready(function () {
+                    // Attach click event to delete buttons
+                    $(".btn-danger").click(function (e) {
+                        e.preventDefault();
+                        var userId = $(this).data("userid");
+                        if (confirm("Are you sure you want to delete this user?")) {
+                            // Redirect to the delete endpoint
+                            window.location.href = '/deleteuser/' + userId;
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </section>
+</body>
+</html>
