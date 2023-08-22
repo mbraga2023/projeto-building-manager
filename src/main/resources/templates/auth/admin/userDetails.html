@@ -1,0 +1,49 @@
+<th:block th:replace="~{/fragments/head :: head}"></th:block>
+
+<body>
+    <div th:replace="/fragments/top :: navbar"></div>
+    <main>
+        <div class="container" style="width: 60%; padding-bottom: 30px;">
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/admin">User Detail</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Post</li>
+                </ol>
+            </nav>
+
+            <article class="card shadow -sm bg-white rounded" style="margin-top: 20px;" >
+                <h1 class="card-title" style="font-weight: bold; margin-bottom: 20px;">
+                    <span th:text="${user.name}"></span>
+                </h1>
+
+                <p class="card-subtitle mb-2 text-muted">
+                    <span class="material-icons">person</span>
+
+                    <span th:text="${user.email}"></span>
+                    <br>
+                    <span class="material-icons">calendar_month</span>
+
+                    <span th:text="${user.unitNumber}"></span>
+
+                </p>
+                <section>
+                    <p class="card-text" style="margin-top: 40px;">
+                    <span th:utext="${user.date}"></span>
+
+                    </p>
+                </section>
+            </article>
+
+
+
+        </div>
+
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

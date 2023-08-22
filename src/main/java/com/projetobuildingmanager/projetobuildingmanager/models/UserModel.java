@@ -1,23 +1,33 @@
 package com.projetobuildingmanager.projetobuildingmanager.models;
 
-// import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-// import org.springframework.format.annotation.DateTimeFormat;
-
-// import jakarta.persistence.Basic;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-// import jakarta.persistence.Temporal;
-// import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import java.util.*;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class UserModel {
 
     @Id
@@ -36,63 +46,32 @@ public class UserModel {
     @NotEmpty(message = "Invalid name")
     private String name;
 
-    @Column(nullable = false)    
+    @Column(nullable = false)
     @NotEmpty(message = "Invalid Unit number")
     private String unitNumber;
 
-    // @Basic
-    // @Temporal (TemporalType.DATE)
-    // @DateTimeFormat(pattern = "dd/MM/yyy")
-    // private Date data;
+    @Column(nullable = true)
+    private String garageSpot;
 
-    public String getUnitNumber() {
-        return unitNumber;
-    }
+    @Column(nullable = true)
+    private String phone;
 
-    public void setUnitNumber(String unitNumber) {
-        this.unitNumber = unitNumber;
-    }
+    @Column(nullable = true)
+    private String observations;
 
-    public Long getId() {
-        return id;
-    }
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate data;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @CreationTimestamp // Automatically set on creation
+    private LocalDateTime createdAt;
 
-    public String getEmail() {
-        return email;
-    }
+    @UpdateTimestamp // Automatically updated on every update
+    private LocalDateTime updatedAt;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="user_role",
+    joinColumns = @JoinColumn(name = "users_id"),
+    inverseJoinColumns =  @JoinColumn(name = "roles_id"))
+    private List<Roles> roles;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    // public Date getData() {
-    //     return data;
-    // }
-
-    // public void setData(Date data) {
-    //     this.data = data;
-    // }
-
-   
-    
 }
