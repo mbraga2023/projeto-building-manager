@@ -1,0 +1,12 @@
+.bd-calledout {
+    /* Your general styles here */
+    padding: 10px;
+    border: 1px solid #ccc;
+    /* ... */
+}
+
+.bd-calledout-info {
+    /* Styles for the info color */
+    background-color: #d4edda;
+    color: #155724;
+}
