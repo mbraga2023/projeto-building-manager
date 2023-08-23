@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -96,37 +97,48 @@ public class AdminController {
         }
     }
 
-    // Controller method for editing a post
-    @GetMapping("/edituser/{id}")
-    public String editUser(@PathVariable("id") long id, Model model) {
-        // Retrieve the post with the given ID
-        UserModel userModel = userService.findById(id);
+    // Controller method for editing a user
+    @GetMapping("/editrole/{id}")
+    public String selecionarPapel(@PathVariable("id") long id, Model model) {
+        UserModel user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid User: " + id));
+    
+        model.addAttribute("user", user);
+        model.addAttribute("listRoles", roleRepository.findAll());
+    
+        return "auth/admin/edit-roles";
 
-        // Add the retrieved post to the model to populate the form
-        model.addAttribute("user", userModel);
 
-        // Return the view for editing the post
-        return "auth/admin/edituser";
     }
 
-    // Controller method for updating a post
-    @PostMapping("/updateuser")
-    public String updateUser(@ModelAttribute("user") UserModel userModel) {
-        // Save the updated post
-        userService.save(userModel);
+    @PostMapping("/update-roles")
+public String updateRoles(@ModelAttribute("user") UserModel user, @RequestParam("selectedRoles") List<Long> selectedRoleIds, RedirectAttributes redirectAttributes) {
+    // Retrieve the user from the database
+    UserModel existingUser = userService.findById(user.getId());
 
-        // Redirect to the list of posts after the update
-        return "redirect:/admin";
+    if (existingUser == null) {
+        throw new IllegalArgumentException("User not found with ID: " + user.getId());
     }
 
-    // Controller method for handling post deletion
-    @GetMapping("/deleteuser/{id}")
-    public String deleteUser(@PathVariable("id") long id) {
-        UserModel userModel = userService.findById(id);
-        if (userModel != null) {
-            userService.delete(userModel);
-        }
-        return "redirect:/admin";
-    }
+    // Update user details
+    existingUser.setName(user.getName());
+    existingUser.setEmail(user.getEmail());
+    existingUser.setPassword(user.getPassword());
+    existingUser.setUnitNumber(user.getUnitNumber());
+    existingUser.setGarageSpot(user.getGarageSpot());
+    existingUser.setPhone(user.getPhone());
+    existingUser.setObservations(user.getObservations());
+
+    // Update user's roles based on selectedRoleIds
+    List<Roles> selectedRoles = roleRepository.findAllById(selectedRoleIds);
+    existingUser.setRoles(selectedRoles);
+
+    // Save the updated user
+    userService.save(existingUser); // Add a flash message to indicate success
+    redirectAttributes.addFlashAttribute("successMessage", "User profile updated successfully!");
+
+    return "redirect:/admin"; //
+}
+
 
 }

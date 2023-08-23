@@ -1,0 +1,88 @@
+<th:block th:replace="~{/fragments/head :: head}"></th:block>
+
+<body>
+    <th:block th:replace="~{/fragments/top :: navbar}"></th:block>
+    <div class="alert alert-success alert-dismissible fade show" th:if="${successMessage}">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <span th:text="${successMessage}" class="sucesss"></span>
+    </div>
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Main</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit User</li>
+            </ol>
+        </nav>
+
+        <h1>Edit User</h1>
+        <div class="bd-calledout bd-calledout-info" th:if="${message}">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <span th:text="${message}"></span>
+        </div>
+        <div class="container">
+            <form th:action="@{/update-roles}" th:object="${user}" method="post">
+                <input type="hidden" th:field="*{id}" />
+                <br>
+                <label for="name" class="form-label">Name:</label>
+                <input class="form-control" type="text" id="name" th:field="*{name}" required>
+                <span class="errorMessage" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                    style="color: red;"></span>
+
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <label for="email" class="form-label">Email:</label>
+                        <input class="form-control" type="email" id="email" th:field="*{email}" required>
+                        <span class="errorMessage" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                            style="color: red;"></span>
+
+                    </div>
+                    <div class="col">
+                        <label for="password" class="form-label">Password:</label>
+                        <input class="form-control" type="text" id="password" th:field="*{password}" required>
+                        <span class="errorMessage" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                            style="color: red;"></span>
+
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <label for="unitNumber" class="form-label">Unit Number:</label>
+                        <input class="form-control" type="text" id="unitNumber" th:field="*{unitNumber}" required
+                            maxlength="10">
+                        <span class="errorMessage" th:if="${#fields.hasErrors('unitNumber')}" th:errors="*{unitNumber}"
+                            style="color: red;"></span>
+                    </div>
+
+                    <div class="col">
+                        <label for="garageSpo" class="form-label">Garage Number:</label>
+                        <input class="form-control" type="text" id="garageSpot" th:field="*{garageSpot}" maxlength="10">
+                    </div>
+                </div>
+                <br>
+                <label for="phone" class="form-label">Phone Number:</label>
+                <input class="form-control" type="text" id="phone" th:field="*{phone}">
+                <br>
+                <label for="observations" class="form-label">Observations</label>
+                <input class="form-control" type="text" id="observations" th:field="*{observations}" required>
+
+                <label for="role" class="form-label">Role</label>
+                <select multiple="multiple" name="selectedRoles" class="form-select">
+                    <option th:each="role : ${listRoles}" th:value="${role.id}"
+                        th:selected="${user.roles.contains(role)}" th:text="${role.role}"></option>
+                </select>
+
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a class="btn btn-sm btn-outline-secondary" href="/admin">Cancel</a>
+            </form>
+            <br>
+        </div>
+        <footer>
+
+            <label>Last update: </label>
+            <div class="mb-2" th:text="${#temporals.format(user.updatedAt, 'dd/MM/yyyy HH:mm')}"></div>
+        </footer>
+</body>
+
+</html>
