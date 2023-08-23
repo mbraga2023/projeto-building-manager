@@ -20,6 +20,7 @@ public interface UserService {
 
     Page<UserModel> findPaginated(Pageable pageable);
 
+    
 }
 
 

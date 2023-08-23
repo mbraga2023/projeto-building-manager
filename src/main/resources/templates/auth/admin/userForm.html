@@ -1,7 +1,15 @@
 <th:block th:replace="~{/fragments/head :: head}"></th:block>
 
 <body>
-    <th:block th:replace="~{/fragments/top :: navbar}"></th:block >
+    <th:block th:replace="~{/fragments/top :: navbar}"></th:block>
+    <style>
+        .error {
+            color: red;
+        }
+
+        .sucesss
+    </style>
+
     <section>
         <div class="container" style="width: 80%; padding-bottom: 30px;">
 
@@ -12,39 +20,43 @@
                 </ol>
             </nav>
 
-            <div class="bd-calledout bd-calledout-info" th:if="${successMessage}">
+            <div class="alert alert-success alert-dismissible fade show" th:if="${message}">
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <span th:text="${successMessage}"></span>
+                <span th:text="${message}" class="sucesss"></span>
             </div>
+            <div th:if="${emailExists}" class="alert alert-danger" role="alert">User already exists</div>
+
             <div class="input-group mb-3">
-                <form th:action="@{/admin/newuser}" th:object="${user}" method="post">
+                <form th:action="@{/admin/saveuser}" th:object="${user}" method="post">
 
                     <br>
-                    <label for="name"class="form-label">Name:</label>
-                    <input class="form-control" type="text" id="name" th:field="*{name}" aria-describedby="basic-addon3 basic-addon4">
+                    <label for="name" class="form-label">Name:</label>
+                    <input class="form-control" type="text" id="name" th:field="*{name}"
+                        aria-describedby="basic-addon3 basic-addon4">
+
                     <div class="form-text" id="basic-addon4">Mandatory field.</div>
-                    <span class="errorMessage" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-                        style="color: red;"></span>
+
                     <br>
                     <label for="email" class="form-label">Email:</label>
-                    <input class="form-control" type="email" id="email" th:field="*{email}" required aria-describedby="basic-addon3 basic-addon4">
+                    <input class="form-control" type="email" id="email" th:field="*{email}" required
+                        aria-describedby="basic-addon3 basic-addon4">
                     <div class="form-text" id="basic-addon4">Mandatory field.</div>
-                    <span class="errorMessage" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-                        style="color: red;"></span>
 
                     <br>
                     <label for="password" class="form-label">Password:</label>
-                    <input class="form-control" type="password" id="password" th:field="*{password}" required aria-describedby="basic-addon3 basic-addon4">
+                    <input class="form-control" type="password" id="password" th:field="*{password}" required
+                        aria-describedby="basic-addon3 basic-addon4">
                     <div class="form-text" id="basic-addon4">Mandatory field.</div>
-                    <span class="errorMessage" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                        style="color: red;"></span>
+                    <div class="error"><span class="message" th:if="${#fields.hasErrors('password')}"
+                            th:errors="*{password}"></span></div>
 
                     <br>
                     <label for="unitNumber" class="form-label">Unit Number:</label>
-                    <input class="form-control" type="text" id="unitNumber" th:field="*{unitNumber}" required aria-describedby="basic-addon3 basic-addon4">
+                    <input class="form-control" type="text" id="unitNumber" th:field="*{unitNumber}" required
+                        aria-describedby="basic-addon3 basic-addon4">
                     <div class="form-text" id="basic-addon4">Mandatory field.</div>
-                    <span class="errorMessage" th:if="${#fields.hasErrors('unitNumber')}" th:errors="*{unitNumber}"
-                        style="color: red;"></span>
+                    <div class="error"><span class="message" th:if="${#fields.hasErrors('unitNumber')}"
+                            th:errors="*{unitNumber}"></span></div>
 
                     <!--<br>
                 <label for="data">Date:</label>
@@ -54,7 +66,7 @@
                 </form>
             </div>
         </div>
-        </div> 
+        </div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"

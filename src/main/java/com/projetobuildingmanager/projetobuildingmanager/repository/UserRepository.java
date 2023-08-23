@@ -8,6 +8,6 @@ import com.projetobuildingmanager.projetobuildingmanager.models.UserModel;
 @Repository
 public interface UserRepository extends JpaRepository <UserModel, Long>{
 
-    boolean existsByEmail(String email);
+    public boolean existsByEmail(String email);
 
 }

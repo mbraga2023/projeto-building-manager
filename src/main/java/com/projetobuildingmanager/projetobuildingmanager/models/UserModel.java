@@ -19,8 +19,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 import java.util.*;
 
 @Data
@@ -35,19 +33,15 @@ public class UserModel {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @Email(message = "Invalid Email")
     private String email;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Invalid Password")
     private String password;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Invalid name")
     private String name;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Invalid Unit number")
     private String unitNumber;
 
     @Column(nullable = true)

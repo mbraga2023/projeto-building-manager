@@ -31,7 +31,6 @@ public class AdminController {
     @Autowired
     private UserRepository userRepository;
 
-
     @RequestMapping(value = "/admin/listar", method = RequestMethod.GET)
     public ModelAndView getUsers(Pageable pageable) {
         ModelAndView mv = new ModelAndView("user");
@@ -53,22 +52,30 @@ public class AdminController {
     }
 
     @GetMapping("/admin/newuser")
-    public String addNewUser(Model model) {
-        model.addAttribute("user", new UserModel());
-        return "auth/admin/userForm";
+public ModelAndView addNewUser() {
+    ModelAndView mv = new ModelAndView("auth/admin/userForm");
+    mv.addObject("user", new UserModel()); // Add the user object to the model
+    return mv;
+}
+
+@PostMapping("/admin/saveuser")
+public String saveUser(@Valid UserModel user, BindingResult result, Model model, RedirectAttributes attributes) {
+    // Check if an existing user with the same email exists
+    boolean emailExists = userRepository.existsByEmail(user.getEmail());
+    if (emailExists) {
+        attributes.addFlashAttribute("emailExists", "User already exists. Profile not saved.");
+        return "redirect:/admin/newuser";
     }
 
-    @PostMapping("/admin/newuser")
-    public String saveUser(@Valid UserModel user, BindingResult result, RedirectAttributes attributes
-            ) {
-        if (result.hasErrors()) {
-            return "auth/admin/userForm";
-        }
-        userRepository.save(user);
-        attributes.addFlashAttribute("successMessage", "User created successfully");
-        return "redirect:newuser";
-
+    if (result.hasErrors()) {
+        attributes.addFlashAttribute("erro", "Problem saving");
+        return "redirect:/admin/newuser";
     }
+
+    userRepository.save(user);
+    attributes.addFlashAttribute("message", "User created successfully");
+    return "redirect:/admin/newuser"; // Redirect to the new user form
+}
 
     @ControllerAdvice
     class CustomErrorController {

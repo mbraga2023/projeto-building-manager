@@ -42,4 +42,5 @@ public class userServiceImpl implements UserService {
     public Page<UserModel> findPaginated(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
+    
 }
