@@ -1,5 +1,6 @@
 package com.projetobuildingmanager.projetobuildingmanager.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.projetobuildingmanager.projetobuildingmanager.models.Roles;
 import com.projetobuildingmanager.projetobuildingmanager.models.UserModel;
+import com.projetobuildingmanager.projetobuildingmanager.repository.RolesRepository;
 import com.projetobuildingmanager.projetobuildingmanager.repository.UserRepository;
 import com.projetobuildingmanager.projetobuildingmanager.service.UserService;
 
@@ -30,6 +33,8 @@ public class AdminController {
     UserService userService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RolesRepository roleRepository;
 
     @RequestMapping(value = "/admin/listar", method = RequestMethod.GET)
     public ModelAndView getUsers(Pageable pageable) {
@@ -52,30 +57,35 @@ public class AdminController {
     }
 
     @GetMapping("/admin/newuser")
-public ModelAndView addNewUser() {
-    ModelAndView mv = new ModelAndView("auth/admin/userForm");
-    mv.addObject("user", new UserModel()); // Add the user object to the model
-    return mv;
-}
-
-@PostMapping("/admin/saveuser")
-public String saveUser(@Valid UserModel user, BindingResult result, Model model, RedirectAttributes attributes) {
-    // Check if an existing user with the same email exists
-    boolean emailExists = userRepository.existsByEmail(user.getEmail());
-    if (emailExists) {
-        attributes.addFlashAttribute("emailExists", "User already exists. Profile not saved.");
-        return "redirect:/admin/newuser";
+    public ModelAndView addNewUser() {
+        ModelAndView mv = new ModelAndView("auth/admin/userForm");
+        mv.addObject("user", new UserModel()); // Add the user object to the model
+        return mv;
     }
 
-    if (result.hasErrors()) {
-        attributes.addFlashAttribute("erro", "Problem saving");
+    @PostMapping("/admin/saveuser")
+    public String saveUser(@Valid UserModel user, BindingResult result, Model model, RedirectAttributes attributes) {
+        // Check if an existing user with the same email exists
+        boolean emailExists = userRepository.existsByEmail(user.getEmail());
+        if (emailExists) {
+            attributes.addFlashAttribute("emailExists", "User already exists. Profile not saved.");
+            return "redirect:/admin/newuser";
+        }
+
+        if (result.hasErrors()) {
+            attributes.addFlashAttribute("erro", "Problem saving");
+            return "redirect:/admin/newuser";
+        }
+        // Busca o papel básico de usuário
+        Roles role = roleRepository.findByRole("USER");
+        List<Roles> roleList = new ArrayList<Roles>();
+        roleList.add(role);
+        user.setRoles(roleList); // associa o papel de USER ao usuário
+
+        userRepository.save(user);
+        attributes.addFlashAttribute("message", "User created successfully");
         return "redirect:/admin/newuser";
     }
-
-    userRepository.save(user);
-    attributes.addFlashAttribute("message", "User created successfully");
-    return "redirect:/admin/newuser"; // Redirect to the new user form
-}
 
     @ControllerAdvice
     class CustomErrorController {
