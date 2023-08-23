@@ -1,0 +1,13 @@
+<th:block th:replace="~{/fragments/head :: head}"></th:block>
+
+<body>
+    <th:block th:replace="~{/fragments/top :: navbar}"></th:block>
+    <div class="alert alert-success alert-dismissible fade show" th:if="${successMessage}">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <span th:text="${successMessage}" class="sucesss"></span>
+    </div>
+
+    <section>
+        <div> ADMIN AREA</div>
+    </section>
+</body>

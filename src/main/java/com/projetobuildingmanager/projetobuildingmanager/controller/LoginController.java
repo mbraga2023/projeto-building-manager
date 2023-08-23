@@ -17,13 +17,32 @@ import com.projetobuildingmanager.projetobuildingmanager.repository.UserReposito
 import jakarta.validation.Valid;
 
 @Controller
-public class UserController { 
+public class LoginController {
+    @Autowired
+    private UserRepository userRepository;
 
-      @GetMapping("/user")
-    public String index() {
-       
-        return "auth/user/index";
+
+    @GetMapping("/")
+    public String login(Model model) {
+        return "home/login";
+
     }
 
+        @GetMapping("/new")
+    public String addNewUser(Model model) {
+        model.addAttribute("user", new UserModel());
+        return "home/register";
+    }
 
+    @PostMapping("/new")
+    public String saveUser(@Valid UserModel user, BindingResult result, RedirectAttributes attributes
+            ) {
+        if (result.hasErrors()) {
+            return "home/register";
+        }
+        userRepository.save(user);
+        attributes.addFlashAttribute("successMessage", "User created successfully");
+        return "redirect:new";
+
+    }
 }
