@@ -41,6 +41,7 @@
                     <input class="form-control" type="email" id="email" th:field="*{email}" required
                         aria-describedby="basic-addon3 basic-addon4">
                     <div class="form-text" id="basic-addon4">Mandatory field.</div>
+                    <div th:if="${emailExists}" th:text="${emailExists}" class="alert alert-danger" role="alert">User already exists</div>
 
                     <br>
                     <label for="password" class="form-label">Password:</label>

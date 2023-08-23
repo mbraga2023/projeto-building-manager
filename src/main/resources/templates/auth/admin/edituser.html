@@ -52,6 +52,9 @@
                 <br>
                 <label for="observations" class="form-label">Observations</label>
                 <input class="form-control" type="text" id="observations" th:field="*{observations}" required>
+                <br>
+                <label>Last updat: </label>
+                <span th:text="${#temporals.format(user.updatedAt, 'dd/MM/yyyy HH:mm')}"></span>
                 <!--<br>
             <label for="data">Date:</label>
             <input type="date" id="data" th:field="*{data}" required>-->
