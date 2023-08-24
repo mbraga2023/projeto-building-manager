@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 
     public UserModel findByEmail(String email);
 
+    public UserModel findByEmailAndPassword(String email, String password);
+
+
 }

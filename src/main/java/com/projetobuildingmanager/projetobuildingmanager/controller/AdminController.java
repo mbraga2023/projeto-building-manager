@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,12 +31,18 @@ import jakarta.validation.Valid;
 
 @Controller
 public class AdminController {
+
     @Autowired
     UserService userService;
+
     @Autowired
     private UserRepository userRepository;
+    
     @Autowired
     private RolesRepository roleRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder criptografia;
 
     @RequestMapping(value = "/admin/listar", method = RequestMethod.GET)
     public ModelAndView getUsers(Pageable pageable) {
@@ -54,6 +61,7 @@ public class AdminController {
         return "auth/admin/index";
 
     }
+
     @GetMapping("/admin/users")
     public String adminUsers(Model model) {
         List<UserModel> user = userService.findAll();
@@ -88,6 +96,10 @@ public class AdminController {
         roleList.add(role);
         user.setRoles(roleList); // associa o papel de USER ao usuário
 
+        String senhaCriptografia = criptografia.encode(user.getPassword());
+		user.setPassword(senhaCriptografia);
+
+
         userRepository.save(user);
         attributes.addFlashAttribute("message", "User created successfully");
         return "redirect:/admin/newuser";
@@ -103,7 +115,7 @@ public class AdminController {
     }
 
     // Controller method for editing a user
-    @GetMapping("/editrole/{id}")
+    @GetMapping("/admin/editrole/{id}")
     public String selecionarPapel(@PathVariable("id") long id, Model model) {
         UserModel user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid User: " + id));
@@ -116,7 +128,7 @@ public class AdminController {
 
     }
 
-    @PostMapping("/update-roles")
+    @PostMapping("/admin/update-roles")
 public String updateRoles(@ModelAttribute("user") UserModel user, @RequestParam("selectedRoles") List<Long> selectedRoleIds, RedirectAttributes redirectAttributes) {
     // Retrieve the user from the database
     UserModel existingUser = userService.findById(user.getId());
@@ -145,5 +157,14 @@ public String updateRoles(@ModelAttribute("user") UserModel user, @RequestParam(
     return "redirect:/admin"; //
 }
 
+ // Controller method for handling post deletion
+ @GetMapping("/admin/deleteuser/{id}")
+ public String deleteUser(@PathVariable("id") long id) {
+     UserModel userModel = userService.findById(id);
+     if (userModel != null) {
+         userService.delete(userModel);
+     }
+     return "redirect:/admin/users";
+ }
 
 }

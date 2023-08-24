@@ -1,48 +1,53 @@
 package com.projetobuildingmanager.projetobuildingmanager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-
-
-import com.projetobuildingmanager.projetobuildingmanager.models.UserModel;
 import com.projetobuildingmanager.projetobuildingmanager.repository.UserRepository;
 
-import jakarta.validation.Valid;
 
-@Controller
+   @Controller
 public class LoginController {
-    @Autowired
-    private UserRepository userRepository;
 
 
+	@Autowired
+	private UserRepository usuarioRepository;
+	
     @GetMapping("/")
-    public String login(Model model) {
-        return "home/login";
-
-    }
-
-        @GetMapping("/new")
-    public String addNewUser(Model model) {
-        model.addAttribute("user", new UserModel());
-        return "home/register";
-    }
-
-    @PostMapping("/new")
-    public String saveUser(@Valid UserModel user, BindingResult result, RedirectAttributes attributes
-            ) {
-        if (result.hasErrors()) {
-            return "home/register";
+    public String home(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails != null) {
+            // Get the user's name from UserDetails
+            String username = userDetails.getUsername();
+            
+            // Determine the role and redirect accordingly
+            if (userDetails.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))) {
+                return "redirect:/admin";
+            } else if (userDetails.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"))) {
+                return "redirect:/user";
+            }
         }
-        userRepository.save(user);
-        attributes.addFlashAttribute("successMessage", "User created successfully");
-        return "redirect:new";
-
+        
+        // Redirect to the login page if user details are not available or roles are not matched
+        return "redirect:/login";
     }
+	
+    @RequestMapping("/login") 
+	public String login() {
+		return "home/login";
+	}
+
+
+    @RequestMapping("/register") 
+	public String register() {
+		return "home/register";
+	}
+
+	@GetMapping("/logout")
+    public String logout() {
+        return "redirect:/login?logout"; // Redirect to login page after logout
+    }
+
 }

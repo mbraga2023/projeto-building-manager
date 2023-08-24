@@ -1,5 +1,6 @@
 package com.projetobuildingmanager.projetobuildingmanager.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -10,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 
 @Entity
-public class Roles {
+public class Roles implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
