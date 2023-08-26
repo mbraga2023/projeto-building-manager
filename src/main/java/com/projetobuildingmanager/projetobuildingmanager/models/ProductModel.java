@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
@@ -21,6 +23,7 @@ public class ProductModel extends AbstractEntity {
     @Column(length = 100, nullable = false)
     private String title;
 
+    @CreatedBy
     @Column(length = 100, nullable = false)
     private String author;
 
@@ -50,6 +53,9 @@ public class ProductModel extends AbstractEntity {
     @UpdateTimestamp // Automatically updated on every update
     @DateTimeFormat(pattern = "MM:HH dd/MM/yyyy") // Corrected pattern
     private LocalDateTime updatedAt;
+
+    @LastModifiedBy
+    private String lastModifiedBy;
 
     public String getTitle() {
         return title;
@@ -121,6 +127,14 @@ public class ProductModel extends AbstractEntity {
 
     public void setNomeimg(String nomeimg) {
         this.nomeimg = nomeimg;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
   

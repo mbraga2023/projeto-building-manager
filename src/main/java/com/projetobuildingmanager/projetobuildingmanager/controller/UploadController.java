@@ -65,7 +65,7 @@ public class UploadController {
         produtoService.salvar(produto); // Corrected method call
         gravarImagem.gravaImagemBase64Service(file, produtoService, produto);
 
-        atributos.addFlashAttribute("sucessMessage", "ProductModel salvo com sucesso!");
+        atributos.addFlashAttribute("successMessage", "Post Published");
 
         return new ModelAndView("redirect:/user/new");
     }

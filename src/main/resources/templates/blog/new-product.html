@@ -33,7 +33,7 @@
                     <!-- Image section -->
                     <div class="col-xs-12 col-sm-3 col-md-3 componenteform">
                         <!-- Display a generic image if no image is present -->
-                        <img class="col-xs-12 img-thumbnail img-responsive" id="foto1" th:src="@{/img/no-image.webp}" th:if="${#strings.isEmpty(produto.img)}" />
+                        <img class="col-xs-12 img-thumbnail img-responsive" id="foto1" th:src="@{/img/no-image-icon.png}" th:if="${#strings.isEmpty(produto.img)}" />
 
                         <!-- Display the saved image if available -->
                         <img class="col-xs-12 img-thumbnail img-responsive" id="foto" th:src="*{img}"

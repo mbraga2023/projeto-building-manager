@@ -3,7 +3,7 @@
 <body>
     <th:block th:replace="~{/fragments/user-nav :: navbar}"></th:block>
 
-    
+
     <div class="alert alert-success alert-dismissible fade show" th:if="${successMessage}">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <span th:text="${successMessage}" class="sucesss"></span>
@@ -16,73 +16,40 @@
                 </ol>
             </nav>
             <!-- Display posts -->
-            <div th:each="produto : ${produtos}" class="card shadow -sm bg-white rounded" style="margin-top: 20px;">
+            <div th:each="produto : ${produtos}" class="card shadow -sm bg-white rounded" style="margin-top: 20px; max-width: 800px;">
                 <!-- Display post details -->
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <img th:src="${produto.img}" alt="Product Image" width="100%" />
                         </div>
-                        <div class="col-md-8">
-                            <h4 class="card-title" style="font-weight: bold; color:black;">
+                        <div class="col-md-6">
+                            <h5 class="card-title" style="font-weight: bold; color:black;">
                                 <span th:text="${produto.title}"></span>
-                            </h4>
+                                <div>
+                                    <span
+                                        th:text="${#strings.replace(#numbers.formatCurrency(produto.price), '.00', '')}"></span>
+                                </div>
+
+                            </h5>
                             <p class="card-text">
-                                <span th:text="${produto.description}"></span>
+                                <span th:text="${#strings.abbreviate(produto.description,50)}"></span>
                             </p>
+
                             <p class="card-text">
-                                Price: <span th:text="${produto.proce}"></span>
+                                <span th:text="${#temporals.format(produto.createdAt, 'dd/MM/yy')}"></span>
+                                <span><a th:href="@{/user/posts/{id}(id=${produto.codigo})}"
+                                        class="btn btn-primary">Read More</a></span>
+
                             </p>
-                            <p class="card-text">
-                                Author: <span th:text="${produto.author}"></span>
-                            </p>
-                            <p class="card-text">
-                                Date-Time: <span th:text="${produto.createdAt}"></span>
-                            </p>
-                            <a th:href="@{${'/produtos/' + produto.id}}" class="btn btn-primary">Read More</a>
+
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Pagination controls -->
-            <nav aria-label="Page navigation">
-                <!-- Pagination controls code here ... -->
-            </nav>
+
         </div>
-    </section>
-</body>
-
-</html>
-Please make sure that you've properly configured the properties and methods in your ProductModel class to match the field names used in the HTML template. Also, adjust the layout and styling as needed for your project's design.
-
-
-
-
-
-
-
-            <!-- Pagination controls -->
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li th:class="${page.first} ? 'disabled' : ''">
-                        <a th:href="${page.first} ? '#' : @{/produtos(page=${page.number} - 1)}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li th:each="pageNumber : ${#numbers.sequence(0, page.totalPages - 1)}">
-                        <a th:href="@{/produtos(page=${pageNumber})}" th:text="${pageNumber + 1}"
-                            th:class="${pageNumber == page.number} ? 'active' : ''"></a>
-                    </li>
-                    <li th:class="${page.last} ? 'disabled' : ''">
-                        <a th:href="${page.last} ? '#' : @{/produtos(page=${page.number} + 1)}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-
     </section>
 </body>
 

@@ -6,8 +6,9 @@
     <th:block th:replace="~{/fragments/user-nav :: navbar}"></th:block>
 
 
-    <div th:if="${successMessage}" class="success-message alert-success">
-        <p th:text="${successMessage}"></p>
+    <div class="alert alert-success alert-dismissible fade show" th:if="${successMessage}">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <span th:text="${successMessage}" class="successMessage"></span>
     </div>
     <section>
         <div class="container" style="width: 80%; padding-bottom: 30px;">
@@ -15,16 +16,16 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Image</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Value</th>
-                        <th>Posted By</th>
-                        <th>Contact</th>
-                        <th>Created At</th>
-                        <th>Last Update</th>
-                        <th></th>
-                        <th></th>
+                        <th style="width: 10%;">Image</th>
+                        <th style="width: 10%;">Title</th>
+                        <th style="width: 10%;">Description</th>
+                        <th style="width: 5%;">Value</th>
+                        <th style="width: 10%;">Posted By</th>
+                        <th style="width: 10%;">Contact</th>
+                        <th style="width: 5%;">Created At</th>
+                        <th style="width: 5%;">Last Update</th>
+                        <th style="width: 10%;"></th>
+                        <th style="width: 10%;"></th>
 
                     </tr>
                 </thead>
@@ -32,7 +33,7 @@
                     <tr th:each="produto : ${produtos}">
                         <td><img th:src="${produto.img}" alt="Product Image" width="100" height="100" /></td>
                         <td th:text="${produto.title}"></td>
-                        <td th:text="${produto.description}"></td>
+                        <td th:text="${#strings.abbreviate(produto.description, 50)}"></td>
                         <td th:text="${produto.price}"></td>
                         <td th:text="${produto.author}"></td> <!-- Display the author who posted the product -->
                         <td th:text="${produto.contact}"></td>
@@ -40,9 +41,9 @@
                         <td th:text="${#temporals.format(produto.updatedAt, 'dd/MM/yyyy HH:mm')}"></td>
 
                         <td>
-                            <span><a class="btn btn-primary" th:href="@{/admin/editpost/{id}(id=${produto.codigo})}"
-                                    role="button">Edit</a></span>
-                            <span><a class="btn btn-danger" th:href="@{/admin/posts/deletepost/{id}(id=${produto.codigo})}"
+                            <span><a class="btn btn-primary" th:href="@{/user/posts/edit/{id}(id=${produto.codigo})}" role="button">Edit</a>
+                            </span>
+                            <span><a class="btn btn-danger" th:href="@{/user/posts/deletepost/{id}(id=${produto.codigo})}"
                                     role="button" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a></span>
                         </td>
 
@@ -53,7 +54,7 @@
             var productId = button.getAttribute("data-productid");
             if (confirm("Are you sure you want to delete this product?")) {
                 // Redirect to the delete endpoint
-                window.location.href = '/admin/posts/deletepost/' + productId;
+                window.location.href = '/user/posts/deletepost/' + productId;
             }
         }
     </script>

@@ -1,0 +1,115 @@
+<th:block th:replace="~{/fragments/head :: head}"></th:block>
+
+<body>
+    <th:block th:replace="~{/fragments/top :: navbar}"></th:block>
+
+    <div class="container">
+
+
+        <h1>Edit Post</h1>
+        <div class="bd-calledout bd-calledout-info" th:if="${successMessage}">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <span th:text="${successMessage}"></span>
+        </div>
+        <div class="container">
+            <!-- Form for editing a product -->
+            <!-- Form for editing a product -->
+            <form method="post" class="form-vertical js-form-loading" enctype="multipart/form-data"
+            th:object="${produto}" 
+            th:action="@{/user/posts/edit/{id}(id=${produto.codigo})}" >
+      
+
+                <!-- Hidden fields -->
+                <input type="hidden" th:field="*{codigo}" />
+
+                <!-- Image section -->
+                <div class="col-xs-12 col-sm-3 col-md-3 componenteform">
+                    <!-- Display the saved image if available -->
+                    <img class="col-xs-12 img-thumbnail img-responsive" id="foto" th:src="*{img}"
+                        th:if="${not #strings.isEmpty(produto.img)}" />
+                    <!-- Input for uploading an image, triggers onchange to preview the image -->
+                    <input type="file" name="file" onchange="visualizarImg(3,0)" capture="camera" />
+                </div>
+
+                <div class="col-xs-12">
+                    <!-- Input field for product title -->
+                    <div class="col-xs-12 componenteform">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('title')} ? has-error">
+                            <label class="input-group-addon control-label">Title</label>
+                            <input id="title" type="text" class="form-control" th:field="*{title}" />
+                        </div>
+                    </div>
+                    <!-- Input field for contact -->
+                    <div class="col-xs-12 componenteform">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('contact')} ? has-error">
+                            <label class="input-group-addon control-label">Contact (email/phone)</label>
+                            <input id="title" type="text" class="form-control" th:field="*{contact}" />
+                        </div>
+                    </div>
+                    <!-- Input field for product description -->
+                    <div class="col-xs-12 componenteform">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? has-error">
+                            <label class="input-group-addon control-label">Description</label>
+                            <textarea id="description" rows="4" cols="30" maxlength="500" class="form-control"
+                                th:field="*{description}"></textarea>
+                        </div>
+                    </div>
+                    <!-- Input field for product price -->
+                    <div class="col-xs-12 col-sm-4 col-md-4 componenteform">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('price')} ? has-error">
+                            <label class="input-group-addon control-label">Price</label>
+                            <input id="price" type="text" class="form-control" th:field="*{price}" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <!-- Save button -->
+                        <button class="btn btn-success pull-left sombra-btn" type="submit" title="save"
+                            data-toggle="tooltip">Salvar</button>
+                        <!-- Back button -->
+                        <a class="btn btn-info pull-right sombra-btn" th:href="@{/user}" title="back"
+                            data-toggle="tooltip">
+                            <i class="fa fa-reply"></i>
+                        </a>
+                    </div>
+                </div>
+            </form>
+
+            <!-- JavaScript function to preview the selected image -->
+            <script>
+                function visualizarImg() {
+                    var previews = document.querySelectorAll('img');
+                    var previewElement = previews[previews.length - 1]; // Select the last 'img' element
+
+                    var file = document.querySelector('input[type=file]').files[0];
+                    var reader = new FileReader();
+
+                    reader.onloadend = function () {
+                        previewElement.src = reader.result;
+                    };
+
+                    if (file) {
+                        reader.readAsDataURL(file);
+                    } else {
+                        previewElement.src = "";
+                    }
+                }
+            </script>
+
+            <br>
+        </div>
+        <footer>
+
+            <label>Last update: </label>
+
+            <div class="mb-2" th:text="${#temporals.format(produto.updatedAt, 'dd/MM/yyyy HH:mm')}"></div>
+            <label>Last update by: </label>
+
+            <div class="mb-2" th:text="${produto.LastModifiedBy}"></div>
+        </footer>
+</body>
+
+</html>

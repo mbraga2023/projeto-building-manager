@@ -3,8 +3,10 @@ package com.projetobuildingmanager.projetobuildingmanager.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.Authentication;
 
 import com.projetobuildingmanager.projetobuildingmanager.models.ProductModel;
@@ -51,4 +53,9 @@ public class ProductService implements AbstractService<ProductModel> {
     public void deleteProduct(Long id) {
         produtoRepository.deleteById(id);
     }
+    public Page<ProductModel> findPaginated(Pageable pageable) {
+        return produtoRepository.findAll(pageable);
+    }
+
+    
 }
