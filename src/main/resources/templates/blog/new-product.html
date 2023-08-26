@@ -1,0 +1,124 @@
+<th:block th:replace="~{/fragments/head :: head}"></th:block>
+
+<body>
+    <th:block th:replace="~{/fragments/user-nav :: navbar}"></th:block>
+
+    
+    <div class="alert alert-success alert-dismissible fade show" th:if="${successMessage}">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <span th:text="${successMessage}" class="successMessage"></span>
+    </div>
+
+    <section>
+        <div class="container" style="width: 80%; padding-bottom: 30px;">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit Post</li>
+                </ol>
+            </nav>
+            <div class="card shadow mb-4" style="padding: 30px; display: flex; justify-content: center;">
+
+                <!-- Form for editing a product -->
+                <form method="post" class="form-vertical js-form-loading" enctype="multipart/form-data"
+                    th:object="${produto}" th:action="@{/user/new}">
+
+                    <!-- Include validation alerts using a Thymeleaf fragment -->
+                    <th:block layout:insert="~{layout/fragmentos/alertas :: validation}"></th:block>
+
+                    <!-- Hidden fields -->
+                    <input type="hidden" th:field="*{codigo}" />
+                    <input type="hidden" th:field="*{nomeimg}" />
+
+                    <!-- Image section -->
+                    <div class="col-xs-12 col-sm-3 col-md-3 componenteform">
+                        <!-- Display a generic image if no image is present -->
+                        <img class="col-xs-12 img-thumbnail img-responsive" id="foto1" th:src="@{/img/no-image.webp}" th:if="${#strings.isEmpty(produto.img)}" />
+
+                        <!-- Display the saved image if available -->
+                        <img class="col-xs-12 img-thumbnail img-responsive" id="foto" th:src="*{img}"
+                            th:if="${not #strings.isEmpty(produto.img)}" />
+                        <input type="hidden" th:field="*{img}" />
+                        <!-- Input for uploading an image, triggers onchange to preview the image -->
+                        <input type="file" name="file" onchange="visualizarImg(3,0)" capture="camera" />
+                    </div>
+
+                    <div class="col-xs-12">
+                        <!-- Input field for product title -->
+                        <div class="col-xs-12 componenteform">
+                            <div class="form-group" th:classappend="${#fields.hasErrors('title')} ? has-error">
+                                <label class="input-group-addon control-label">Title</label>
+                                <input id="title" type="text" class="form-control" th:field="*{title}" />
+                            </div>
+                        </div>
+                        <!-- Input field for contact -->
+                        <div class="col-xs-12 componenteform">
+                            <div class="form-group" th:classappend="${#fields.hasErrors('contact')} ? has-error">
+                                <label class="input-group-addon control-label">Contact (email/phone)</label>
+                                <input id="contact" type="text" class="form-control" th:field="*{contact}" />
+                            </div>
+                        </div>
+                        <!-- Input field for product description -->
+                        <div class="col-xs-12 componenteform">
+                            <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? has-error">
+                                <label class="input-group-addon control-label">Description</label>
+                                <textarea id="description" rows="4" cols="30" maxlength="500" class="form-control"
+                                    th:field="*{description}"></textarea>
+                            </div>
+                        </div>
+                        <!-- Input field for product price -->
+                        <div class="col-xs-12 col-sm-4 col-md-4 componenteform">
+                            <div class="form-group" th:classappend="${#fields.hasErrors('price')} ? has-error">
+                                <label class="input-group-addon control-label">Price</label>
+                                <input id="proce" type="text" class="form-control" th:field="*{price}" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hidden field to store the author's name -->
+                    <input type="hidden" th:field="*{author}" />
+
+                    <!-- Buttons -->
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <!-- Save button -->
+                            <button class="btn btn-success pull-left sombra-btn" type="submit" title="Salvar Exercício"
+                                data-toggle="tooltip">Salvar</button>
+                            <!-- Back button -->
+                            <a class="btn btn-info pull-right sombra-btn" th:href="@{/produtos}" title="voltar"
+                                data-toggle="tooltip">
+                                <i class="fa fa-reply"></i>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- JavaScript function to preview the selected image -->
+    <script>
+        function visualizarImg() {
+            var previews = document.querySelectorAll('img');
+            var previewElement = previews[previews.length - 1]; // Select the last 'img' element
+
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                previewElement.src = reader.result;
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                previewElement.src = "";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

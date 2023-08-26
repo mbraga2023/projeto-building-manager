@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head id="head" th:fragment="head">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Building Manager System</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
-        <script src="https://kit.fontawesome.com/ec3043d3f4.js" crossorigin="anonymous"></script>
 
-    </head>
+<head id="head" th:fragment="head">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Building Manager System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+    integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/ec3043d3f4.js" crossorigin="anonymous"></script>
+
+</head>
 
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navbar" name="navbar" th:fragment="navbar">
@@ -21,7 +27,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <ul class="navbar-nav me-auto">
+      <ul class="navbar-nav d-flex flex-wrap">
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -56,7 +62,7 @@
             Admin Services
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Manage Posts</a></li>
+            <li><a class="dropdown-item" href="/admin/posts/products">Manage Posts</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -77,23 +83,22 @@
 
         </li>
       </ul>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 
-      <div th:remove="tag" sec:authentication="name">thymeleaf</div>
+        <div th:remove="tag" sec:authentication="name">thymeleaf</div>
 
-      <i class="fa-solid fa-inbox" style="margin-left: 10px;" alt="Messages"></i>
-      <i class="fa-solid fa-user" style="margin-left: 10px;" alt="Profile"></i>
-
-      <div style="margin-left: 20px;">
-        <form th:action="@{/logout}" method="post">
-          <button class="btn btn-secondary" type="submit">Sign Out</button>
-        </form>
+        <i class="fa-solid fa-inbox" style="margin-left: 30px;" alt="Messages"></i>
+        <i class="fa-solid fa-user" style="margin-left: 30px;" alt="Profile"></i>
       </div>
-
-      </ul>
+      <form th:action="@{/logout}" method="post">
+        <button class="btn btn-secondary" type="submit" style="margin-left: 30px" >Sign Out</button>
+      </form>
     </div>
 
-  </nav>
+    </div>
 
+    </div>
+  </nav>
 </body>
 
 </html>

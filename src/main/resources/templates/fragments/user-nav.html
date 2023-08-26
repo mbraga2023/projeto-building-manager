@@ -27,7 +27,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <ul class="navbar-nav me-auto">
+      <ul class="navbar-nav d-flex flex-wrap">
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -88,21 +88,21 @@
         </li>
       </ul>
 
-      <div th:remove="tag" sec:authentication="name">thymeleaf</div>
-      <i class="fa-solid fa-inbox" style="margin-left: 10px;" alt="Messages"></i>
-      <i class="fa-solid fa-user" style="margin-left: 10px;" alt="Profile"></i>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 
-      <div style="margin-left: 20px;">
-        <form th:action="@{/logout}" method="post">
-          <button class="btn btn-secondary" type="submit">Sign Out</button>
-        </form>
+        <div th:remove="tag" sec:authentication="name">thymeleaf</div>
+        <i class="fa-solid fa-inbox" style="margin-left: 30px;" alt="Messages"></i>
+        <i class="fa-solid fa-user" style="margin-left: 30px;" alt="Profile"></i>
       </div>
-
-      </ul>
+      <form th:action="@{/logout}" method="post">
+        <button class="btn btn-secondary" type="submit" style="margin-left: 30px" >Sign Out</button>
+      </form>
     </div>
 
-  </nav>
+    </div>
 
+    </div>
+  </nav>
 </body>
 
 </html>
