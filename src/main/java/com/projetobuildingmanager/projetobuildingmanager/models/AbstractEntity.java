@@ -3,7 +3,6 @@ package com.projetobuildingmanager.projetobuildingmanager.models;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.MappedSuperclass;
 
 import java.io.Serializable;

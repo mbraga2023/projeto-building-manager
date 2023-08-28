@@ -21,7 +21,7 @@
   <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navbar" name="navbar" th:fragment="navbar">
     <div class="container-fluid">
 
-      <a class="navbar-brand" href="/admin">Admin Area</a>
+      <a class="navbar-brand" href="/user">User Area</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -34,11 +34,27 @@
             User Services
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="">Sell Produts</a></li>
+            <li><a class="dropdown-item" href="/user/posts">For Sale</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="#">Recomend a contractor</a></li>
+
+            <li><a class="dropdown-item" href="/user/new">Sell Produts</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="/user/my-posts">Manager Posts</a></li>
+        </li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" href="">Profile</a></li>
+    </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="/user/reset-password">Reset Password</a></li>
+        </li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -61,28 +77,7 @@
             <li><a class="dropdown-item" href="#">Register a Car</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Admin Services
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Manage Posts</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Reports</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Finance</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Security</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="">Edit Profile</a></li>
+        
           </ul>
 
         </li>

@@ -9,10 +9,18 @@
 
     <section>
         <div> USER AREA
+            <h3 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h3>
+
             <br>
-            <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
+            <div>
+                <th:block th:replace="~{/blog/products-postview :: index-user}"></th:block>
+            </div>
+            <div>
+                <form th:action="@{/logout}" method="post">
+            </div>
+            <div>
+                <input type="submit" value="Sign Out" />
+            </div>
         </div>
     </section>
 </body>

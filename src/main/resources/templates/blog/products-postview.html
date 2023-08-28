@@ -8,7 +8,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <span th:text="${successMessage}" class="sucesss"></span>
     </div>
-    <section>
+    <section >
         <div class="container" style="width: 60%; padding-bottom: 30px;">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -16,7 +16,7 @@
                 </ol>
             </nav>
             <!-- Display posts -->
-            <div th:each="produto : ${produtos}" class="card shadow -sm bg-white rounded" style="margin-top: 20px; max-width: 800px;">
+            <div th:each="produto : ${produtos}" class="card shadow -sm bg-white rounded" style="margin-top: 20px; max-width: 800px;"  id="index-user" name="index-user" th:fragment="index-user">
                 <!-- Display post details -->
                 <div class="card-body">
                     <div class="row">

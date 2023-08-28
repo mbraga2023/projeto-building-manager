@@ -19,9 +19,11 @@ public class UserController {
     ProductService productService;
 
     @GetMapping("/user")
-    public String index() {
-
-        return "auth/user/index";
+    public ModelAndView indexView(ModelAndView modelAndView) {
+        List<ProductModel> produtos = productService.getAllProducts();
+        modelAndView.addObject("produtos", produtos);
+        modelAndView.setViewName("auth/user/index");
+        return modelAndView;
     }
 
     @GetMapping("/user/posts")
@@ -33,11 +35,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/posts/{id}", method = RequestMethod.GET)
-public ModelAndView getPostDetails(@PathVariable("id") long id) {
-    ModelAndView mv = new ModelAndView("blog/product-post-details");
-    ProductModel post = productService.getProductById(id);
-    mv.addObject("post", post);
-    return mv;
-}
+    public ModelAndView getPostDetails(@PathVariable("id") long id) {
+        ModelAndView mv = new ModelAndView("blog/product-post-details");
+        ProductModel post = productService.getProductById(id);
+        mv.addObject("post", post);
+        return mv;
+    }
 
 }

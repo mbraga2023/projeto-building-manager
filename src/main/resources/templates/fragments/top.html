@@ -39,49 +39,55 @@
               <hr class="dropdown-divider">
             </li>
             <li><a class="dropdown-item" href="/admin/users">Edit</a></li>
-          </ul>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="/user/reset-password">Reset Password</a></li>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Services
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Maintanence</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Book Ammenities</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Visitors Administration</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Admin Services
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/admin/posts/products">Manage Posts</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Manage Garage</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Reports</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Finance</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Security</a></li>
-          </ul>
+      </ul>
 
-        </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Services
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Maintanence</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">Book Ammenities</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">Visitors Administration</a></li>
+        </ul>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Admin Services
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/admin/posts/products">Manage Posts</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">Manage Garage</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">Reports</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">Finance</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">Security</a></li>
+        </ul>
+
+      </li>
       </ul>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 
@@ -91,7 +97,7 @@
         <i class="fa-solid fa-user" style="margin-left: 30px;" alt="Profile"></i>
       </div>
       <form th:action="@{/logout}" method="post">
-        <button class="btn btn-secondary" type="submit" style="margin-left: 30px" >Sign Out</button>
+        <button class="btn btn-secondary" type="submit" style="margin-left: 30px">Sign Out</button>
       </form>
     </div>
 

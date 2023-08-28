@@ -23,8 +23,6 @@
                 <form method="post" class="form-vertical js-form-loading" enctype="multipart/form-data"
                     th:object="${produto}" th:action="@{/user/new}">
 
-                    <!-- Include validation alerts using a Thymeleaf fragment -->
-                    <th:block layout:insert="~{layout/fragmentos/alertas :: validation}"></th:block>
 
                     <!-- Hidden fields -->
                     <input type="hidden" th:field="*{codigo}" />
@@ -33,7 +31,10 @@
                     <!-- Image section -->
                     <div class="col-xs-12 col-sm-3 col-md-3 componenteform">
                         <!-- Display a generic image if no image is present -->
-                        <img class="col-xs-12 img-thumbnail img-responsive" id="foto1" th:src="@{/img/no-image-icon.png}" th:if="${#strings.isEmpty(produto.img)}" />
+                        <img class="col-xs-12 img-thumbnail img-responsive" id="foto1" th:src="${#strings.isEmpty(produto.img) ? '/static/img/no-image-icon.png' : produto.img}" />
+
+
+
 
                         <!-- Display the saved image if available -->
                         <img class="col-xs-12 img-thumbnail img-responsive" id="foto" th:src="*{img}"
@@ -114,7 +115,7 @@
             if (file) {
                 reader.readAsDataURL(file);
             } else {
-                previewElement.src = "";
+                previewElement.src = "/img/no-image-icon.png";
             }
         }
     </script>
