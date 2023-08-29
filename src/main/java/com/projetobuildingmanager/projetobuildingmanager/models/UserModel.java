@@ -1,11 +1,9 @@
 package com.projetobuildingmanager.projetobuildingmanager.models;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -57,9 +55,6 @@ public class UserModel implements UserDetails {
 
     @Column(nullable = true)
     private String observations;
-
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate data;
 
     @CreationTimestamp // Automatically set on creation
     private LocalDateTime createdAt;
